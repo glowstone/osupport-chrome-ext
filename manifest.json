@@ -11,7 +11,7 @@
 	"default_locale": "en",
 
 	"background": {
-		"scripts": ["js/background.js"]
+		"page": "html/background.html"
 	},
 
 	"browser_action": {     
@@ -27,8 +27,11 @@
 		{
 			"matches": ["*://*/*"],
 			"excludes_matches": [],
-			"css": ["css/style.css"],
-			"js": ["js/jquery-1.9.1.min.js", "js/content_script.js"]
+			"js": [
+				"js/lib/require.js",
+				"js/requireContent.js",
+				"js/requireConfig.js",
+				"js/content_script.js"]
 		}
 	],
 
@@ -36,5 +39,10 @@
 		"notifications"
 	],
 
-	"options_page": "options.html"
+	"options_page": "options.html",
+
+	"web_accessible_resources": [
+		"js/modules/*",
+		"js/lib/*"
+	]
 } 

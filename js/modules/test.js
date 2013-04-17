@@ -1,3 +1,3 @@
 define({
-	color: "blue";
+	color: "blue"
 });
