@@ -1,10 +1,30 @@
 
 requirejs.config(requirejsConfig);
-requirejs(["../lib/jquery", "test2"],
-	function($, myModule) {
+requirejs([
+	"jquery", 
+	"test2",
+	"parser"
+	],
+	function($, myModule, parser) {
+
+
 		console.log("background.js is running");
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
+
+		parser.parse();
+
+		// $("link[rel^=author]").each(function(item, thing) {
+		// 	console.log(item, thing.dataset);
+		// 	var url = thing.dataset.ocontrib;
+		// 	console.log(url);
+		// 	$.get(url, function(data, textstatus, jqxhr) {
+		// 		console.log("Got something", data);
+		// 	});
+
+		// });
+
+
 	}
 );
 

@@ -1,16 +1,20 @@
 requirejs.config(requirejsConfig);
 requirejs([
-	"../lib/jquery", 
+	"jquery", 
 	"test2",
+	"handlebars",
 	],
-	function($, myModule) {
+	function(something, myModule, hb) {
 		console.log("background.js is running");
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
+		console.log(something);
+		console.log(hb);
 
 
 		var array = chrome.extension.getViews();
 		console.log(array);
+		console.log(something);
 
 		chrome.runtime.onMessage.addListener(
 		function(request, sender, sendResponse) {

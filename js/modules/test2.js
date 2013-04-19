@@ -1,8 +1,12 @@
 define([
-	"test"
+	"jquery",
+	"test",
+	//"handlebars",
 	],
-	function(test) {
-
+	function($, test) {
+		console.log($);
+		//console.log(handlebars);
+		
 		return {
 			color: "red",
 			baseColor: test.color,
