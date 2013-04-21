@@ -3,31 +3,40 @@ requirejs.config(requirejsConfig);
 requirejs([
 	"jquery", 
 	"test2",
-	"parser"
+	"parser",
+	"comm",
 	],
-	function($, myModule, parser) {
+	function($, myModule, parser, comm) {
 
 
 		console.log("background.js is running");
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
 
-		author_obj = parser.parse();
-		parser.extension_comm(author_obj);
+		var embeddedProperties = parser.parseDOM();
+		console.log(embeddedProperties);
 
 
 
-		// $("link[rel^=author]").each(function(item, thing) {
-		// 	console.log(item, thing.dataset);
-		// 	var url = thing.dataset.ocontrib;
-		// 	console.log(url);
-		// 	$.get(url, function(data, textstatus, jqxhr) {
-		// 		console.log("Got something", data);
-		// 	});
+		if (parser.versionCheck(embeddedProperties).valid) {
+			console.log("OSupport enabled content");
 
-		// });
+			// if (parser.referencedMetadataHost(contentProperties)) {
+			// 	console.log("External metadata host");
+			// 	return;
+			// }
 
+			// console.log("No external metadata host");
+			// var oSupportProperties = filterOSupportFields(contentProperties);
+			// console.log(oSupportProperties);
 
+			return;
+		}
+
+		console.log("Content does not support OSupport");
+		return;
+
+		
 	}
 );
 
