@@ -3,6 +3,47 @@ define([
 	],
 	function() {
 
+		REQ_ATTR = ["osupport"]
+		OPT_ATTR = ["metasrc"]
+		DATA_ATTR = ["email", "phone", "paypal", "dwolla", "bitcoin"]
+
+		/**
+		* Given an object containing HTML5 data attributes, returns 
+
+		*/
+		var extractOSupportAttributes = function()
+
+
+		/**
+		* Parses the local page of the content script to find the first link 
+		* with rel=author, reads HTML5 data attributes, and returns a JS object.
+		*/
+		var contentDataAttributeParse = function() {
+			// Content script automatically executes in the web page context
+			var creator = $("link[rel^=author]").first();
+			console.log(creator, creator.attributes);
+			// console.log(author)
+			// console.log(author.attr("href"));
+			// console.log(author[0].dataset);
+			// author_obj = {};
+			// attributes.map(function(item) {
+			// 	author_obj[item] = author[0].dataset[item];		
+			// });
+			// return author_obj;
+		}
+
+
+		var resolvedDataAttributeParse
+
+
+
+
+
+		local_parse
+
+
+
+
 		attributes = ["ocontrib", "paypal", "bitcoin", "fname", "lname"]
 
 		var local_payment_info = function() {
@@ -47,6 +88,8 @@ define([
 		return {
 			name: "parser",
 			parse: function() {
+				//contentDataAttributeParse();
+				//console.log("HERE");
 				return local_payment_info();
 			},
 			extension_comm: function(author_obj) {

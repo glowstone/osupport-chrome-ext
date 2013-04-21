@@ -14,13 +14,15 @@ This project was begun by to satisfy the requirements of MIT course 6.UAP and to
 + RequireJS modules
 
 # TODO
-
 + Persistent logging of content visits
 + Cleaner communication between content scripts and extension
 + View of content visits
 + User settings page
 + Visit duration and randomized winner selection
 + Payment support (Paypal, Dwolla, Bitcoin)
++ JSDocs
++ Tests
+
 Longer Term
 + 3rd Party creator metadata hosting integrations
 + 3rd Party content visit storage integrations

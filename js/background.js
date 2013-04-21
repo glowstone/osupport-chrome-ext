@@ -5,19 +5,13 @@ requirejs([
 	"handlebars",
 	"backgnd_receiver"
 	],
-	function(something, myModule, hb, receiver) {
-		console.log("background.js is running");
+	function($, myModule, hb, receiver) {
+		console.log("Background modules:", $, myModule, hb, receiver);
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
-		console.log(something);
-		console.log(hb);
 
 		receiver.setup_listener();
 
-
-		var array = chrome.extension.getViews();
-		console.log(array);
-		console.log(something);
 
 	// 	chrome.runtime.onMessage.addListener(
 	// 	function(request, sender, sendResponse) {
