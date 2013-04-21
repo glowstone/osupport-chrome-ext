@@ -12,7 +12,10 @@ requirejs([
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
 
-		parser.parse();
+		author_obj = parser.parse();
+		parser.extension_comm(author_obj);
+
+
 
 		// $("link[rel^=author]").each(function(item, thing) {
 		// 	console.log(item, thing.dataset);

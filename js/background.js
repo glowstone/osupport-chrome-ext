@@ -3,34 +3,37 @@ requirejs([
 	"jquery", 
 	"test2",
 	"handlebars",
+	"backgnd_receiver"
 	],
-	function(something, myModule, hb) {
+	function(something, myModule, hb, receiver) {
 		console.log("background.js is running");
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
 		console.log(something);
 		console.log(hb);
 
+		receiver.setup_listener();
+
 
 		var array = chrome.extension.getViews();
 		console.log(array);
 		console.log(something);
 
-		chrome.runtime.onMessage.addListener(
-		function(request, sender, sendResponse) {
-			console.log("background received message");
-			console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-			if (request.greeting == "hello") {
-				sendResponse({farewell: "goodbye"});
-			}
+	// 	chrome.runtime.onMessage.addListener(
+	// 	function(request, sender, sendResponse) {
+	// 		console.log("background received message");
+	// 		console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
+	// 		if (request.greeting == "hello") {
+	// 			sendResponse({farewell: "goodbye"});
+	// 		}
 
-			chrome.tabs.getSelected(null, function(tab) {
-				chrome.tabs.sendMessage(tab.id, {greeting: "hola"}, function(response) {
-					console.log(response.farewell);
-				});
-			})
-		}
-	);
+	// 		chrome.tabs.getSelected(null, function(tab) {
+	// 			chrome.tabs.sendMessage(tab.id, {greeting: "hola"}, function(response) {
+	// 				console.log(response.farewell);
+	// 			});
+	// 		})
+	// 	}
+	// );
 
 
 	
