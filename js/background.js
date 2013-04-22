@@ -13,8 +13,7 @@ requirejs([
 
 		comm.registerListener("visit", function(request, sender) {
 			console.log(request);
-			//store.test();
-			store.open(store.test);
+			store.open(store.add, request);
 			return {name: "visit-received"};
 		});
 

@@ -3,11 +3,9 @@ define([
 	],
 	function() {
 
-
-		var db = null;
-		var DB_VERSION = 1;
-		var objectStoreNames = ["visits"]
-
+		indexedDb = {};
+		indexedDb.db = null;
+		indexedDb.DB_VERSION = 3;
 
 		/*
 		* Initializes a persistent indexedDB or upgrades the existing persistent
@@ -15,7 +13,7 @@ define([
 		Called while opening an indexedDb if the database version is greater than
 		the existing one in persistent storage. 
 		*/
-		var upgradeDatabase = function(event) {
+		indexedDb.upgradeDatabase = function(event) {
 			console.log("onupgradeneeded", event);
 			db = event.target.result;
 
@@ -25,36 +23,58 @@ define([
 	    }
 
 			// Create an objectStore to hold info about visits
-			var visitStore = db.createObjectStore("visits", {keyPath: "timeStamp"});
+			var visitStore = db.createObjectStore("visits", {keyPath: "URL"});
 		}
 
-
-		var open = function(callback) {
-			console.log(mystring);
-			console.log(window);
+		indexedDb.open = function(callback, item) {
 			console.log(this);
-			console.log(db);
-			var that = this;
-			console.log(indexedDB);
-
+			var self = this;
 			// Create or open the database, returns IDBOpenDBRequest object
-			var request = indexedDB.open("content", DB_VERSION);
+			var request = indexedDB.open("content", self.DB_VERSION);
 			// Initialize or upgrade indexedDb with necessary Object Stores
-			request.onupgradeneeded = upgradeDatabase;
+			request.onupgradeneeded = self.upgradeDatabase;
 			request.onerrror = function(event) {
 				console.log("Error openning indexedDB", event);
 			}
 			request.onsuccess = function(event) {
-				console.log(this);
-				console.log(that);
-				console.log(db);
 				console.log("Successfully openned indexedDB", event);
-				that.db = event.target.result;
-				callback();
+				self.db = event.target.result;
+				var db = self.db
+				db = request.result;
+				console.log("Yay!");
+
+				var transaction = db.transaction(["visits"], "readwrite");
+
+				transaction.oncomplete = function(event) {
+					console.log("All done!");
+				}
+
+				transaction.onerror = function(event) {
+					console.log("Some error during transaction");
+				}
+
+				var store = transaction.objectStore("visits");
+				console.log(store);
+				var operation = store.add(item);
+
+				operation.onsuccess = function(event) {
+					console.log("Add was successful");
+					console.log(event);
+					console.log(operation);
+				}
+
+
+				//callback(self.db, item);
+				// var trans = db.transaction(["content"], "readwrite")
+				// var store = trans.objectStore("visits");
+				// var request = store.put({demo: "test"});
+				// request.onsuccess = function() {
+				// 	console.log("Successful write");
+				// }
 			}
 		}
 
-		var performTransaction = function() {
+		indexedDb.performTransaction = function() {
 			console.log(db);
 			// Start a transcation, returns a IDBRequest object
 			// var store = db.transaction(["content"], "readwrite").objectStore("visits");
@@ -64,38 +84,45 @@ define([
 			// }
 		}
 
-		var add = function() {
+		indexedDb.add = function(db, item) {
+			// Start a transcation, returns a IDBRequest object
 			console.log(db);
-		}
-
-		return {
-			open: function(callback) {
-				console.log(this);
-				var that = this;
-				db = "dsadsadas"
-				// Create or open the database, returns IDBOpenDBRequest object
-				var request = indexedDB.open("content", DB_VERSION);
-				// Initialize or upgrade indexedDb with necessary Object Stores
-				request.onupgradeneeded = upgradeDatabase;
-				request.onerrror = function(event) {
-					console.log("Error openning indexedDB", event);
-				}
-				request.onsuccess = function(event) {
-					console.log("Successfully openned indexedDB", event);
-					console.log(event);
-					that.db = event.target.result;
-					console.log(this);
-					console.log(that);
-					console.log(that.db);
-					callback();
-				}
-			},
-			performTransaction: performTransaction,
-			add: add,
-			test: function() {
-					console.log(db);
+			var trans = db.transaction(["content"], "readwrite")
+			var store = trans.objectStore("visits");
+			var request = store.put(item);
+			request.onsuccess = function() {
+				console.log("Successful write");
 			}
 		}
+
+		return indexedDb;
+			// open: function(callback) {
+			// 	console.log(this);
+			// 	var that = this;
+			// 	db = "dsadsadas"
+			// 	// Create or open the database, returns IDBOpenDBRequest object
+			// 	var request = indexedDB.open("content", DB_VERSION);
+			// 	// Initialize or upgrade indexedDb with necessary Object Stores
+			// 	request.onupgradeneeded = upgradeDatabase;
+			// 	request.onerrror = function(event) {
+			// 		console.log("Error openning indexedDB", event);
+			// 	}
+			// 	request.onsuccess = function(event) {
+			// 		console.log("Successfully openned indexedDB", event);
+			// 		console.log(event);
+			// 		that.db = event.target.result;
+			// 		console.log(this);
+			// 		console.log(that);
+			// 		console.log(that.db);
+			// 		callback();
+			// 	}
+			// },
+			// performTransaction: performTransaction,
+			// add: add,
+			// test: function() {
+			// 		console.log(db);
+			// }
+		// }
 
 	// End of Module define function closure.
 	}
