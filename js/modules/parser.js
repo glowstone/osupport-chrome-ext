@@ -16,7 +16,7 @@ define([
 		* all HTML5 data attribute dataset key/value pairs.
 		*/
 		var readDOMDataAttributes = function(matchString) {
-			var creator = $(matchString).val();
+			var creator = $(matchString)[0];
 			var domStringMap = creator && creator.dataset;
 			var kvpairs = {};
 			for (key in domStringMap) {
@@ -163,8 +163,9 @@ define([
 			},
 			parseDOM: parseDOM,
 			versionCheck: versionCheck,
+			referencedMetadataHost: referencedMetadataHost,
+			filterOSupportFields: filterOSupportFields,
 		}
-
 
 	// End of Module define function closure.
 	}

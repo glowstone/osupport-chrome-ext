@@ -3,32 +3,16 @@ requirejs([
 	"jquery", 
 	"test2",
 	"handlebars",
-	"backgnd_receiver"
+	"comm"
 	],
-	function($, myModule, hb, receiver) {
-		console.log("Background modules:", $, myModule, hb, receiver);
+	function($, myModule, hb, comm) {
+		console.log("Background modules:", $, myModule, hb, comm);
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
 
-		receiver.setup_listener();
-
-
-	// 	chrome.runtime.onMessage.addListener(
-	// 	function(request, sender, sendResponse) {
-	// 		console.log("background received message");
-	// 		console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-	// 		if (request.greeting == "hello") {
-	// 			sendResponse({farewell: "goodbye"});
-	// 		}
-
-	// 		chrome.tabs.getSelected(null, function(tab) {
-	// 			chrome.tabs.sendMessage(tab.id, {greeting: "hola"}, function(response) {
-	// 				console.log(response.farewell);
-	// 			});
-	// 		})
-	// 	}
-	// );
-
+		comm.registerListener("visit", function(request, sender) {
+			return {name: "visit-received"};
+		});
 
 	
 	// End of requireJS function
@@ -36,24 +20,6 @@ requirejs([
 );
 
 
-
-
-
-// chrome.runtime.onMessage.addListener(
-// 	function(request, sender, sendResponse) {
-// 		console.log("background received message");
-// 		console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-// 		if (request.greeting == "hello") {
-// 			sendResponse({farewell: "goodbye"});
-// 		}
-
-// 		chrome.tabs.getSelected(null, function(tab) {
-// 			chrome.tabs.sendMessage(tab.id, {greeting: "hola"}, function(response) {
-// 				console.log(response.farewell);
-// 			});
-// 		})
-// 	}
-// );
 
 
 // chrome.browserAction.onClicked.addListener(function(tab) {

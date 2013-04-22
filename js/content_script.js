@@ -7,6 +7,7 @@ requirejs([
 	"comm",
 	],
 	function($, myModule, parser, comm) {
+		//"use strict";
 
 
 		console.log("background.js is running");
@@ -21,15 +22,19 @@ requirejs([
 		if (parser.versionCheck(embeddedProperties).valid) {
 			console.log("OSupport enabled content");
 
-			// if (parser.referencedMetadataHost(contentProperties)) {
-			// 	console.log("External metadata host");
-			// 	return;
-			// }
+			if (parser.referencedMetadataHost(embeddedProperties)) {
+				console.log("External metadata host");
+				return;
+			}
 
-			// console.log("No external metadata host");
-			// var oSupportProperties = filterOSupportFields(contentProperties);
-			// console.log(oSupportProperties);
-
+			console.log("No external metadata host");
+			var oSupportProperties = parser.filterOSupportFields(embeddedProperties);
+			console.log(oSupportProperties);
+			var replyFromExtension = function(response) {
+				console.log("Response received", response);
+			}
+			oSupportProperties["name"] = "visit"
+			comm.sendToExtension(oSupportProperties,replyFromExtension);
 			return;
 		}
 
@@ -39,43 +44,3 @@ requirejs([
 		
 	}
 );
-
-
-
-
-// (function() {
-// 	//"use strict";
-
-// 	console.log("Hello Content!");
-
-// 	var find_page_info = function() {
-// 		return {name: "Dalton Hubble", email: "dhubble@mit.edu"};
-// 	}
-
-// 	var is_page_ocontrib = function() {
-// 		return true;
-// 	}
-
-// 	chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-// 		console.log(response.farewell);
-// 	});
-
-// 	chrome.runtime.onMessage.addListener(
-// 		function(request, sender, sendResponse) {
-// 			if (request.greeting == "hola") {
-// 				console.log("Received hola")
-// 				sendResponse({farewell: "adios"});
-// 			}
-// 		}
-// 	)
-
-// 	if (is_page_ocontrib()) {
-// 		var info = find_page_info();
-// 		console.log(info);
-		
-// 	}
-
-
-// })();
-
-
