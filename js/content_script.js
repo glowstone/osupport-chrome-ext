@@ -1,23 +1,15 @@
 
 requirejs.config(requirejsConfig);
 requirejs([
-	"jquery", 
-	"test2",
+	"jquery",
 	"parser",
 	"comm",
 	],
-	function($, myModule, parser, comm) {
+	function($, parser, comm) {
 		//"use strict";
-
-
-		console.log("background.js is running");
-		console.log("My favorite:" + myModule.color);
-		console.log("My second favorite color " + myModule.baseColor);
 
 		var embeddedProperties = parser.parseDOM();
 		console.log(embeddedProperties);
-
-
 
 		if (parser.versionCheck(embeddedProperties).valid) {
 			console.log("OSupport enabled content");
@@ -35,6 +27,7 @@ requirejs([
 			}
 			oSupportProperties["name"] = "visit"
 			comm.sendToExtension(oSupportProperties,replyFromExtension);
+
 			return;
 		}
 
