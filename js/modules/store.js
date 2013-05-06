@@ -1,11 +1,23 @@
 define([
 	"jquery",
 	],
-	function() {
+	function($) {
+
+
 
 		indexedDb = {};
 		indexedDb.db = null;
 		indexedDb.DB_VERSION = 3;
+
+		indexedDb.test = function() {
+			var counter = 1;
+			var inner = function() {
+				console.log(this);
+				console.log(counter);
+				this.counter += 1;
+			}
+			return inner;
+		}
 
 		/*
 		* Initializes a persistent indexedDB or upgrades the existing persistent
@@ -55,7 +67,7 @@ define([
 
 				var store = transaction.objectStore("visits");
 				console.log(store);
-				var operation = store.add(item);
+				var operation = store.put(item);
 
 				operation.onsuccess = function(event) {
 					console.log("Add was successful");

@@ -1,4 +1,4 @@
-# Open Support Chrome Extension
+# Open Tip Chrome Extension
 
 A Chrome extension allowing users to show appreciation and monetary support for online content they enjoy. Privately logs pages visited in your browser's local
 storage so that periodic payments can be made to a randomly selected site. Site selection is weighted by visit duration so that sites you spend the most time on are more likely to be selected. Averaged over all users of Open Support, popular web articles, pages, and other content will receive a greater proportion of user monetary support.
