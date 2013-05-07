@@ -18,21 +18,49 @@ requirejs([
 			return {name: "visit-received"};
 		});
 
-		var googleAuth = new OAuth2('google', {
-			client_id: '526777043427.apps.googleusercontent.com',
-			client_secret: 'C2zbqgdDaLXKSAeUWtr8oQec',
-			api_scope: 'https://www.googleapis.com/auth/tasks'
+		// var googleAuth = new OAuth2('google', {
+		// 	client_id: '526777043427.apps.googleusercontent.com',
+		// 	client_secret: 'C2zbqgdDaLXKSAeUWtr8oQec',
+		// 	api_scope: 'https://www.googleapis.com/auth/tasks'
+		// });
+		// console.log(googleAuth);
+
+		// googleAuth.authorize(function() {
+		// 	console.log("Inside authorize!")
+  // 			// Ready for action
+
+  // 			// var request = $.ajax({
+  // 			// 	type: "GET",
+  // 			// 	url: "https://www.googleapis.com/tasks/v1/users/me/lists",
+  // 			// 	data: {},
+  // 			// 	contentType: "application/json",
+  // 			// 	dataType: "json",
+  // 			// 	success: function(response) {
+  // 			// 		console.log(response);
+  // 			// 	},
+  // 			// 	headers: {'Authorization': 'OAuth ' + google.getAccessToken()}
+  // 			// });
+		// });
+
+		var dwollaAuth = new OAuth2('dwolla', {
+			client_id: 'x5s2B3hLc3YqW5rE1lBT3pBiq8NDUVymbbcdRg+kfFQVEAN1QP',
+			client_secret: 'O1UaGQsQp7OSWHrOFAT/PSDvzPC8BKZms9UJOpGpo7G93aS8Tz',
+			api_scope: 'Send'
 		});
-		console.log(googleAuth);
+		console.log(dwollaAuth);
 
-		googleAuth.authorize(function() {
-			console.log("Inside authorize!")
-  			// Ready for action
+		dwollaAuth.authorize(function() {
+			console.log("Inside Dwolla authorize!");
 
-  			var request = $.ajax({
-  				type: "GET",
-  				url: "https://www.googleapis.com/tasks/v1/users/me/lists",
-  				data: {},
+			var request = $.ajax({
+  				type: "POST",
+  				url: "https://www.dwolla.com/oauth/rest/transactions/send",
+  				data: {
+  					"oauth_token": dwollaAuth.getAccessToken(),
+  					"pin": "4268",
+  					"destinationId": "812-560-5495",
+  					"amout": 5
+  				},
   				contentType: "application/json",
   				dataType: "json",
   				success: function(response) {
@@ -40,9 +68,11 @@ requirejs([
   				},
   				headers: {'Authorization': 'OAuth ' + google.getAccessToken()}
   			});
-		});
 
-		
+
+
+		});
+	
 
 
 		// var incrementA = closure.counterA();

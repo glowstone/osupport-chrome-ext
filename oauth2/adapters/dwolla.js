@@ -1,23 +1,17 @@
-OAuth2.adapter('google', {
+OAuth2.adapter('dwolla', {
   authorizationCodeURL: function(config) {
-    var url = ('https://accounts.google.com/o/oauth2/auth?' +
+    return ('https://www.dwolla.com/oauth/v2/authenticate?' +
       'client_id={{CLIENT_ID}}&' +
       'redirect_uri={{REDIRECT_URI}}&' +
       'scope={{API_SCOPE}}&' +
-      'access_type=offline&' +
       'response_type=code')
         .replace('{{CLIENT_ID}}', config.clientId)
         .replace('{{REDIRECT_URI}}', this.redirectURL(config))
         .replace('{{API_SCOPE}}', config.apiScope);
-    console.log(url)
-    return url;
   },
 
   redirectURL: function(config) {
-    console.log("Got to redirectURL")
-    return "http://localhost"
-    //return 'urn:ietf:wg:oauth:2.0:oob';
-    //return 'http://www.google.com/robots.txt';
+    return 'https://www.dwolla.com/robots.txt'
   },
 
   parseAuthorizationCode: function(url) {
@@ -29,7 +23,7 @@ OAuth2.adapter('google', {
   },
 
   accessTokenURL: function() {
-    return 'https://accounts.google.com/o/oauth2/token';
+    return 'https://www.dwolla.com/oauth/v2/authenticate';
   },
 
   accessTokenMethod: function() {

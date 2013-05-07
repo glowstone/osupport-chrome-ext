@@ -57,7 +57,6 @@ if (localStorage.adapterReverse) {
   OAuth2.adapterReverse = JSON.parse(localStorage.adapterReverse);
   delete localStorage.adapterReverse;
 }
-console.log(OAuth2.adapterReverse)
 
 /**
  * Consolidates the data stored in localStorage on the current adapter in to
@@ -381,7 +380,6 @@ OAuth2.adapter = function(name, impl) {
   // Make an entry in the adapter lookup table
   OAuth2.adapterReverse[impl.redirectURL()] = name;
   // Store the the adapter lookup table in localStorage
-  console.log()
   localStorage.oauth2_adapterReverse = JSON.stringify(OAuth2.adapterReverse);
 };
 
@@ -397,6 +395,7 @@ OAuth2.lookupAdapterName = function(url) {
   // Google no longer redirects to http://www.google.com/robots.txt
   // Instead you request to redirect to 'urn:ietf:wg:oauth:2.0:oob' and 
   // it redirects response back to the extension.
+  console.log(adapterReverse);
   return adapterReverse[url] || adapterReverse['urn:ietf:wg:oauth:2.0:oob']
 };
 
