@@ -6,14 +6,11 @@ requirejs([
 	"comm",
 	"store",
 	"closure",
-	"chrome_ex_oauthsimple",
-	"chrome_ex_oauth",
 	],
-	function($, myModule, hb, comm, store, closure, chrome_ex_oauthsimple, chrome_ex_oauth) {
-		console.log("Background modules:", $, myModule, hb, comm, chrome_ex_oauthsimple, chrome_ex_oauth);
+	function($, myModule, hb, comm, store, closure) {
+		console.log("Background modules:", $, myModule, hb, comm);
 		console.log("My favorite:" + myModule.color);
 		console.log("My second favorite color " + myModule.baseColor);
-		console.log(ChromeExOAuth)
 
 		comm.registerListener("visit", function(request, sender) {
 			console.log(request);
@@ -21,20 +18,32 @@ requirejs([
 			return {name: "visit-received"};
 		});
 
-		var oauth = ChromeExOAuth.initBackgroundPage({
-			'request_url': 'https://www.google.com/accounts/OAuthGetRequestToken' ,
-			'authorize_url': 'https://www.google.com/accounts/OAuthAuthorizeToken',
-			'access_url': 'https://www.google.com/accounts/OAuthGetAccessToken',
-			'consumer_key': '526777043427.apps.googleusercontent.com',
-			'consumer_secret': 'pQArGoL1vlrGViJsJ_OwMHxm',
-			'scope': 'https://docs.google.com/feeds/',
-			'app_name': 'Open Tip'
+		var googleAuth = new OAuth2('google', {
+			client_id: '526777043427.apps.googleusercontent.com',
+			client_secret: 'C2zbqgdDaLXKSAeUWtr8oQec',
+			api_scope: 'https://www.googleapis.com/auth/tasks'
 		});
-		console.log(oauth);
+		console.log(googleAuth);
 
-		oauth.authorize(function() {
-			console.log("Inside authorize")
+		googleAuth.authorize(function() {
+			console.log("Inside authorize!")
+  			// Ready for action
+
+  			var request = $.ajax({
+  				type: "GET",
+  				url: "https://www.googleapis.com/tasks/v1/users/me/lists",
+  				data: {},
+  				contentType: "application/json",
+  				dataType: "json",
+  				success: function(response) {
+  					console.log(response);
+  				},
+  				headers: {'Authorization': 'OAuth ' + google.getAccessToken()}
+  			});
 		});
+
+		
+
 
 		// var incrementA = closure.counterA();
 		// console.log(incrementA());

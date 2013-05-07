@@ -11,11 +11,5 @@ var requirejsConfig = {
 		"handlebars": {
 			exports: "Handlebars",
 		},
-		"chrome_ex_oauth": {
-			exports: "ChromeExOAuth"
-		},
-		"chrome_ex_oauthsimple": {
-			exports: "OAuthSimple"
-		}
 	}
 }
